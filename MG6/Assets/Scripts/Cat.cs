@@ -13,7 +13,7 @@ public class Cat : MonoBehaviour
     [SerializeField] private float _attackCooldown;
 
     private bool _facingLeft;
-    private bool _isGrounded = true;
+    [SerializeField]  private bool _isGrounded = true;
     private float _attackTime;
 
     // ------------------------------------------------------------------------
@@ -29,7 +29,7 @@ public class Cat : MonoBehaviour
         if (Input.GetKey(KeyCode.Space) && _isGrounded)
         {
             _isGrounded = false;
-
+            
             _rigidbody.linearVelocity = new Vector2(
                 _rigidbody.linearVelocity.x,
                 _jump
@@ -64,9 +64,15 @@ public class Cat : MonoBehaviour
         //      collider.
         // You might want to check the Rigidbody2D scripting documentation
         //      for a useful variable :)
-        
 
-        
+        if (_rigidbody.linearVelocityY > 0.0f)
+        {
+            _collider.enabled = false;
+        }
+        else
+        {
+            _collider.enabled = true;
+        }
         // STEP 1 -------------------------------------------------------------
     }
 

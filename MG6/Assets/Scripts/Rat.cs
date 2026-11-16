@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class Rat : MonoBehaviour
@@ -6,6 +7,7 @@ public class Rat : MonoBehaviour
     [SerializeField] private float _spawnAmount;
     [SerializeField] private GameObject _ratPrefab;
     [SerializeField] private SpriteRenderer _explosionPrefab;
+    private int colorNumber = 0;
 
     private Color[] _colors = new Color[3]
     {
@@ -18,6 +20,21 @@ public class Rat : MonoBehaviour
     // ------------------------------------------------------------------------
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        string tag = collision.gameObject.tag;
+        if (tag == "Attack")
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                SpawnSmallRat();
+            }
+            gameObject.transform.localScale *= _shrinkAmount;
+            SpawnExplosion(_colors[colorNumber]);
+            colorNumber++;
+            if (colorNumber >= 3)
+            {
+                colorNumber = 0;
+            }
+        }
         // STEP 2 -------------------------------------------------------------
         // If the Rat collides with a GameObject with the "Attack" tag,
         //      call SpawnSmallRat() _spawnAmount number of times to spawn
@@ -60,9 +77,9 @@ public class Rat : MonoBehaviour
         //      rotation correctly.
         // Your game should look exaclty like the finished example.
 
-        //float randomAngle = Random.Range(0, 360);
-        //Vector3 rotationAngles = new Vector3(0, randomAngle, 0);
-        //rat.transform.Rotate(rotationAngles);
+        float randomAngle = Random.Range(0, 360);
+        Vector3 rotationAngles = new Vector3(0, 0, randomAngle);
+        rat.transform.Rotate(rotationAngles);
 
         // STEP 3 -------------------------------------------------------------
     }

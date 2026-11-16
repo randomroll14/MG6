@@ -1,2 +1,4 @@
 # MG6
 
+1. If you write a for loop in the update method, the entire loop will be run through, aka the entire loop will finish before within that frame of the update method. If you write a for loop that takes a long time, it will make the game lag because it will increase the time between frames.
+2. If the cat's apex of the jump is within the collision of the platform (aka it phases through the platform but doesnt go all the way up), as the cat falls it instead teleports to the top of the platform. This is because the cat's linear velocity y is starting to be negative therefore its collision returns and it can't be within a platform while this happens.
